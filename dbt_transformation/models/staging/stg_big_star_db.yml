@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        description: Unique id that identifies a customer
+        data_tests:
+          - unique
+          - not_null
+          
+  - name: stg_orders
+    columns:
+      - name: order_id
+        description: Unique id that identifies an order
+        data_tests: 
+          - unique
+          - not_null
+      - name: order_status
+        description: string that shows status of an order
+        data_tests:
+          - accepted_values: 
+              values: ['delivered', 'approved', 'canceled', 'created', 'invoiced', 'processing', 'shipped', 'unavailable']
+      - name: customer_id
+        description: a Unique id that identifies customers
+        data_tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: order_approved_at
+        description: a datetime value that shows when an order was signed of to be fulfilled
+      - name: order_delivered_at
+        description: a datetime value that shows when an order has been approved for delivery
+        
